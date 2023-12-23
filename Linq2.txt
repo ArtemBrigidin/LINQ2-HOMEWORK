@@ -1,0 +1,115 @@
+1.
+List<int> numbers = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+int targetSum = 7;
+
+Console.WriteLine($"Пары чисел, сумма которых равна {targetSum}:");
+
+for (int i = 0; i < numbers.Count; i++)
+{
+    for (int j = i + 1; j < numbers.Count; j++)
+    {
+        if (numbers[i] + numbers[j] == targetSum)
+        {
+            Console.WriteLine($"{numbers[i]}, {numbers[j]}");
+        }
+    }
+}
+
+2.
+List<string> stringList = new List<string>
+        {
+            "apple",
+            "Banana",
+            "orange",
+            "Apple",
+            "banana",
+            "Orange"
+        };
+
+var uniqueWords = stringList
+    .SelectMany(str => str.Split(' '))
+    .Select(word => word.ToLower())
+    .Distinct();
+
+int uniqueWordCount = uniqueWords.Count();
+
+Console.WriteLine($"Количество уникальных слов: {uniqueWordCount}");
+3. 
+var numbers = Enumerable.Range(1, 100);
+
+var result = numbers.Where(x => numbers.Any(y => y * y == x));
+
+Console.WriteLine("Числа, которые являются квадратами другого числа:");
+foreach (var number in result)
+{
+    Console.WriteLine($"{Math.Sqrt(number)} => {number}");
+}
+
+4. 
+
+List<string> stringsList = new List<string>
+        {
+            "apple",
+            "banana",
+            "orange",
+            "elephant",
+            "iouea",
+            "xyz"
+        };
+
+char[] chars = { 'a', 'e', 'i', 'o', 'u' };
+
+var result = stringsList.Where(str => chars.All(vowel => str.Contains(vowel)));
+
+Console.WriteLine("Строки, содержащие все гласные буквы:");
+foreach (var str in result)
+{
+    Console.WriteLine(str);
+}
+
+5.
+string inputString = Console.ReadLine();
+var uniqueCharacters = inputString.GroupBy(c => c).Select(group => group.Key);
+
+Console.WriteLine("Уникальные символы в строке:");
+foreach (var character in uniqueCharacters)
+{
+    Console.Write(character + " ");
+}
+
+
+6.
+
+List<Person> persons = new List<Person>
+{
+    new Person { Id = 1, Name = "John" },
+    new Person { Id = 2, Name = "Jane" },
+};
+
+List<Address> addresses = new List<Address>
+{
+    new Address { PersonId = 1, City = "New York" },
+    new Address { PersonId = 2, City = "London" },
+};
+
+var query = from person in persons
+            join address in addresses on person.Id equals address.PersonId
+            select new { person.Name, address.City };
+
+Console.WriteLine("Соединенные данные из двух коллекций:");
+foreach (var result in query)
+{
+    Console.WriteLine($"{result.Name} - {result.City}");
+}
+
+class Person
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+}
+
+class Address
+{
+    public int PersonId { get; set; }
+    public string City { get; set; }
+}
